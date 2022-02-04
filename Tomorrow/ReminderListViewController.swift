@@ -8,7 +8,21 @@
 import UIKit
 
 class ReminderListViewController: UITableViewController {
-    
+    //add a constant named showDetailSegueIdentifier for the segue identifier that you added to the storyboard
+    static let showDetailSegueIdentifier = "ShowReminderDetailSegue"
+    /*
+     Add an override for prepare(for:).
+     This method notifies the view controller before a segue is performed.
+     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Self.showDetailSegueIdentifier,
+           let destination = segue.destination as? ReminderDetailViewController,
+           let cell = sender as? UITableViewCell,
+           let indexPath = tableView.indexPath(for: cell) {
+            let reminder = Reminder.testData[indexPath.row]
+            destination.configure(with: reminder)
+        }
+    }
 }
 
 extension ReminderListViewController {
